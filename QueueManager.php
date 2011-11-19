@@ -39,7 +39,7 @@ class QueueManager implements QueueInterface
         return $this->implementation->configure($options);
     }
 
-    public function put($job)
+    public function put($job, $delay)
     {
         return $this->implementation->put($job);
     }

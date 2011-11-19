@@ -6,10 +6,6 @@ set_time_limit(0);
 $vendorDir = __DIR__;
 $deps = array(
     array('symfony', 'http://github.com/symfony/symfony', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/master'),
-    array('doctrine-common', 'http://github.com/doctrine/common.git', 'origin/master'),
-    array('doctrine-dbal', 'http://github.com/doctrine/dbal.git', 'origin/master'),
-    array('doctrine', 'http://github.com/doctrine/doctrine2.git', 'origin/master'),
-    array('swiftmailer', 'http://github.com/swiftmailer/swiftmailer.git', 'v4.1.0'),
     array('proxy-object', 'https://github.com/lapistano/proxy-object.git', 'origin/master'),
     array('mockery', 'https://github.com/padraic/mockery.git', 'origin/master'),
 );
