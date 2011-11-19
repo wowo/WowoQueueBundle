@@ -21,6 +21,13 @@ class BeanstalkdQueueImplementation implements QueueInterface
     protected $tube;
     protected $ignore;
 
+    /**
+     * configures implementation object 
+     * 
+     * @param array $options 
+     * @access public
+     * @return void
+     */
     public function configure(array $options)
     {
         $default = array(
@@ -52,20 +59,50 @@ class BeanstalkdQueueImplementation implements QueueInterface
         }
     }
 
-    public function put($job, $delay)
+    /**
+     * put 
+     * 
+     * @param mixed $job 
+     * @param mixed $priority 
+     * @param mixed $delay 
+     * @access public
+     * @return void
+     */
+    public function put($job, $priority = null, $delay = null)
     {
+        return $this
+            ->pheanstalk
+            ->useTube($this->tube)
+            ->put(json_encode($job), $priority ?: \Pheanstalk::DEFAULT_PRIORITY, $delay);
     }
 
+    /**
+     * get 
+     * 
+     * @access public
+     * @return void
+     */
     public function get()
     {
+        return $this
+            ->pheanstalk
+            ->watch($this->tube)
+            ->ignore($this->ignore)
+            ->reserve();
     }
 
-    public function delete()
+    /**
+     * delete 
+     * 
+     * @param mixed $implementationSpecyficJobObject 
+     * @access public
+     * @return void
+     */
+    public function delete($implementationSpecyficJobObject)
     {
-    }
-
-    public function clear()
-    {
+        return $this
+            ->pheanstalk
+            ->delete($implementationSpecyficJobObject);
     }
 
     protected function getAllMessages()

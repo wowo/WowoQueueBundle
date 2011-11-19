@@ -39,9 +39,9 @@ class QueueManager implements QueueInterface
         return $this->implementation->configure($options);
     }
 
-    public function put($job, $delay)
+    public function put($job, $priority = null, $delay = null)
     {
-        return $this->implementation->put($job);
+        return $this->implementation->put($job, $priority, $delay);
     }
 
     public function get()
@@ -49,13 +49,8 @@ class QueueManager implements QueueInterface
         return $this->implementation->get();
     }
 
-    public function delete()
+    public function delete($implementationSpecyficJobObject)
     {
         return $this->implementation->delete();
-    }
-
-    public function clear()
-    {
-        return $this->implementation->clear();
     }
 }
