@@ -25,17 +25,17 @@ class BeanstalkdQueueImplementation implements QueueInterface
     {
         $default = array(
             'address' => null,
-            'tube'    => get_class($this),
+            'tube'    => 'wowo_default',
             'ignore'  => 'default',
-            'pheanstalkClass'  => '\Pheanstalk',
+            'pheanstalkClass'  => 'Pheanstalk',
             'pheanstalkObject' => null,
         );
         $options = array_merge($default, $options);
         $this->tube    = $options['tube'];
         $this->ignore  = $options['ignore'];
 
-        if (null != $pheanstalkObject) {
-            $this->pheanstalk = $pheanstalkObject;
+        if (null != $options['pheanstalkObject']) {
+            $this->pheanstalk = $options['pheanstalkObject'];
         } else {
             if (null == $options['address']) {
                 throw new ConfigurationException("Beanstalkd address can't be null");
@@ -45,6 +45,10 @@ class BeanstalkdQueueImplementation implements QueueInterface
             }
             $klass = $options['pheanstalkClass'];
             $this->pheanstalk = new $klass($options['address']);
+        }
+        if (!$this->pheanstalk instanceof \Pheanstalk) {
+            $this->pheanstalk = null;
+            throw new ConfigurationException("Invalid object passed as a pheanstalkObject");
         }
     }
 
@@ -64,4 +68,7 @@ class BeanstalkdQueueImplementation implements QueueInterface
     {
     }
 
+    protected function getAllMessages()
+    {
+    }
 }
