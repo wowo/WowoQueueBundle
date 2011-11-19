@@ -16,11 +16,13 @@ class QueueManager implements QueueInterface
 {
     /**
      * Concrete implementation of queue mechanizm
-     * 
-     * @var mixed
-     * @access protected
      */
     protected $implementation;
+
+    /**
+     * Symfony2 service container (or any other container implementation you may use with your framework)
+     */
+    protected $serviceContainer;
 
     /**
      * The constructor, gets implementation as a param
@@ -29,9 +31,10 @@ class QueueManager implements QueueInterface
      * @access public
      * @return void
      */
-    public function __construct(QueueInterface $implementation)
+    public function __construct(QueueInterface $implementation, $serviceContainer = null)
     {
-        $this->implementation = $implementation;
+        $this->implementation   = $implementation;
+        $this->serviceContainer = $serviceContainer;
     }
 
     public function configure(array $options)

@@ -4,17 +4,28 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="wowo_queue.example.class">Wowo\Bundle\QueueBundle\Example</parameter>
+        <parameter key="wowo_queue.queue_manager.class">Wowo\Bundle\QueueBundle\QueueManager</parameter>
+        <parameter key="wowo_queue.beanstalkd_implementation.class">Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation</parameter>
+
+        <parameter key="wowo_queue.pheanstalk.address">127.0.0.1:11300</parameter>
     </parameters>
 
     <services>
-        <service id="wowo_queue.example" class="%wowo_queue.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="wowo_queue.manager" class="%wowo_queue.queue_manager.class%">
+            <argument type="service" id="wowo_queue.queue_implementation" />
+            <argument type="service" id="service_container" />
         </service>
+
+        <service id="wowo_queue.implementation.beanstalkd" class="%wowo_queue.beanstalkd_implementation.class%">
+            <call method="configure">
+                <argument type="collection">
+                    <argument key="address">%wowo_queue.pheanstalk.address%</argument>
+                    <argument key="tube">wowo_queue</argument>
+                </argument>
+            </call>
+        </service>
+
+        <service id="wowo_queue.queue_implementation" alias="wowo_queue.implementation.beanstalkd" />
     </services>
-    -->
 </container>
