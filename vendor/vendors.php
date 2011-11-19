@@ -8,6 +8,7 @@ $deps = array(
     array('symfony', 'http://github.com/symfony/symfony', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/master'),
     array('proxy-object', 'https://github.com/lapistano/proxy-object.git', 'origin/master'),
     array('mockery', 'https://github.com/padraic/mockery.git', 'origin/master'),
+    array('pheanstalk', 'https://github.com/pda/pheanstalk', 'origin/master')
 );
 
 foreach ($deps as $dep) {
