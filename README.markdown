@@ -5,7 +5,7 @@
 [![Build Status](https://secure.travis-ci.org/wowo/WowoQueueBundle.png)](https://secure.travis-ci.org/wowo/WowoQueueBundle)
 
 The WowoQueueBundle provides unified method for use queue systems, like Beanstalkd, RabbitMQ, flat files,
-database driven queues and more on. For now it only supports Beanstalkd, but you can add your own implementation
+database driven queues, etc. For now it only supports Beanstalkd, but you can add your own implementation
 on your own and send pull request.
 
 ## Installation
