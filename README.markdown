@@ -1,7 +1,5 @@
 # WowoQueueBundle
 
-*WARNING* this bundle is still under development, although you can use it on your own risk :-)
-
 [![Build Status](https://secure.travis-ci.org/wowo/WowoQueueBundle.png)](https://secure.travis-ci.org/wowo/WowoQueueBundle)
 
 The WowoQueueBundle provides unified method for use queue systems, like Beanstalkd, RabbitMQ, flat files,
