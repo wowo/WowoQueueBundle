@@ -9,6 +9,7 @@
         <parameter key="wowo_queue.beanstalkd_implementation.class">Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation</parameter>
 
         <parameter key="wowo_queue.pheanstalk.address">127.0.0.1:11300</parameter>
+        <parameter key="wowo_queue.pheanstalk.tube">wowo_queue</parameter>
     </parameters>
 
     <services>
@@ -21,7 +22,7 @@
             <call method="configure">
                 <argument type="collection">
                     <argument key="address">%wowo_queue.pheanstalk.address%</argument>
-                    <argument key="tube">wowo_queue</argument>
+                    <argument key="tube">%wowo_queue.pheanstalk.tube%</argument>
                 </argument>
             </call>
         </service>

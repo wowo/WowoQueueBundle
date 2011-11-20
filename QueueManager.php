@@ -54,6 +54,6 @@ class QueueManager implements QueueInterface
 
     public function delete($implementationSpecyficJobObject)
     {
-        return $this->implementation->delete();
+        return $this->implementation->delete($implementationSpecyficJobObject);
     }
 }

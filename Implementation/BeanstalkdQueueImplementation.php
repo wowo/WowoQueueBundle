@@ -73,7 +73,7 @@ class BeanstalkdQueueImplementation implements QueueInterface
         return $this
             ->pheanstalk
             ->useTube($this->tube)
-            ->put(json_encode($job), $priority ?: \Pheanstalk::DEFAULT_PRIORITY, $delay);
+            ->put($job, $priority ?: \Pheanstalk::DEFAULT_PRIORITY, $delay);
     }
 
     /**

@@ -15,9 +15,14 @@ on your own and send pull request.
 Add following lines to your `deps` file:
 
 ```
-    [WowoNewsletterBundle]
+    [WowoQueueBundle]
         git=git://github.com/wowo/WowoQueueBundle.git
         target=bundles/Wowo/QueueBundle
+
+    [pheanstalk]
+        git=https://github.com/pda/pheanstalk
+        target=/pheanstalk
+        version=v1.1.0
 
 ```
 Now, run the vendors script to download the bundle:
@@ -40,6 +45,13 @@ $loader->registerNamespaces(array(
         ));
 ```
 
+Also add Pheanstalk init on the bottom of autoload:
+
+``` php
+// ...
+require_once __DIR__.'/../vendor/pheanstalk/pheanstalk_init.php';
+```
+
 ### Step 3: Enable the bundle
 
 Finally, enable the bundle in the kernel:
@@ -52,7 +64,21 @@ public function registerBundles()
 {
         $bundles = array(
             // ...
-            new Wowo\NewsletterBundle\WowoQueueBundle(),
+            new Wowo\QueueBundle\WowoQueueBundle(),
         );
 }
 ```
+### Step 4: install and run beanstalkd
+
+On Debian linux systems (including Ubuntu) you can run:
+
+``` bash
+$ sudo apt-get install beanstalkd
+```
+
+Then run it as a daemon:
+
+``` bash
+$ beanstalkd -d -l 127.0.0.1 -p 11300
+```
+
