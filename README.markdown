@@ -15,7 +15,7 @@ Add following lines to your `deps` file:
 ```
     [WowoQueueBundle]
         git=git://github.com/wowo/WowoQueueBundle.git
-        target=bundles/Wowo/QueueBundle
+        target=bundles/Wowo/Bundle/QueueBundle
 
     [pheanstalk]
         git=https://github.com/pda/pheanstalk
