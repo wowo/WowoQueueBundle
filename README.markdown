@@ -80,3 +80,4 @@ Then run it as a daemon:
 $ beanstalkd -d -l 127.0.0.1 -p 11300
 ```
 
+![tracking](http://sznapka.pl/visits/visits.php?source=github-queue-bundle)
