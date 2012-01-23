@@ -62,7 +62,7 @@ public function registerBundles()
 {
         $bundles = array(
             // ...
-            new Wowo\QueueBundle\WowoQueueBundle(),
+            new Wowo\Bundle\QueueBundle\WowoQueueBundle(),
         );
 }
 ```
