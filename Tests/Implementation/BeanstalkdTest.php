@@ -1,10 +1,10 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\Tests;
+namespace Wowo\Bundle\QueueBundle\Tests\Implementation;
 
 use Wowo\Bundle\QueueBundle\QueueManager;
 use Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation;
-use lapistano\ProxyObject\ProxyObject;
+use lapistano\ProxyObject\ProxyBuilder;
 
 /**
  * BeantalkdTest 
@@ -28,11 +28,6 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
         $opt = array(
             'address' => '127.0.0.1:11300',
         );
-        $proxy = new ProxyObject();
-        $proxy = $proxy
-            ->getProxyBuilder('\Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation')
-            ->setProperties(array('pheanstalk', 'tube', 'ignore'))
-            ->getProxy();
 
         $proxy = $this->getProxy();
         $proxy->configure($opt);
@@ -53,12 +48,12 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
             'address' => '127.0.0.1:11300',
             'ignore' => 'asd',
             'tube'   => 'lol',
-            'pheanstalkClass' => '\Wowo\Bundle\QueueBundle\Tests\ExtendedPheanstalk'
+            'pheanstalkClass' => '\Wowo\Bundle\QueueBundle\Tests\Implementation\ExtendedPheanstalk'
         );
 
         $proxy = $this->getProxy();
         $proxy->configure($opt);
-        $this->assertInstanceOf('\Wowo\Bundle\QueueBundle\Tests\ExtendedPheanstalk', $proxy->pheanstalk);
+        $this->assertInstanceOf('\Wowo\Bundle\QueueBundle\Tests\Implementation\ExtendedPheanstalk', $proxy->pheanstalk);
         $this->assertEquals('lol', $proxy->tube);
         $this->assertEquals('asd', $proxy->ignore);
     }
@@ -77,7 +72,7 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
         $proxy = $this->getProxy();
         $proxy->configure($opt);
-        $this->assertInstanceOf('\Wowo\Bundle\QueueBundle\Tests\ExtendedPheanstalk', $proxy->pheanstalk);
+        $this->assertInstanceOf('\Wowo\Bundle\QueueBundle\Tests\Implementation\ExtendedPheanstalk', $proxy->pheanstalk);
     }
 
     /**
@@ -138,12 +133,10 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
     protected function getProxy()
     {
-        $proxy = new ProxyObject();
-        $proxy = $proxy
-            ->getProxyBuilder('\Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation')
+        $proxy = new ProxyBuilder('\Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation');
+        return $proxy
             ->setProperties(array('pheanstalk', 'tube', 'ignore'))
             ->getProxy();
-        return $proxy;
     }
 }
 
