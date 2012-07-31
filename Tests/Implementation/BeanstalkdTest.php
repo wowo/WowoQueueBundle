@@ -1,9 +1,9 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\Tests\Implementation;
+namespace Wowo\QueueBundle\Tests\Implementation;
 
-use Wowo\Bundle\QueueBundle\QueueManager;
-use Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation;
+use Wowo\QueueBundle\QueueManager;
+use Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation;
 use lapistano\ProxyObject\ProxyBuilder;
 
 /**
@@ -48,12 +48,12 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
             'address' => '127.0.0.1:11300',
             'ignore' => 'asd',
             'tube'   => 'lol',
-            'pheanstalkClass' => '\Wowo\Bundle\QueueBundle\Tests\Implementation\ExtendedPheanstalk'
+            'pheanstalkClass' => '\Wowo\QueueBundle\Tests\Implementation\ExtendedPheanstalk'
         );
 
         $proxy = $this->getProxy();
         $proxy->configure($opt);
-        $this->assertInstanceOf('\Wowo\Bundle\QueueBundle\Tests\Implementation\ExtendedPheanstalk', $proxy->pheanstalk);
+        $this->assertInstanceOf('\Wowo\QueueBundle\Tests\Implementation\ExtendedPheanstalk', $proxy->pheanstalk);
         $this->assertEquals('lol', $proxy->tube);
         $this->assertEquals('asd', $proxy->ignore);
     }
@@ -72,12 +72,12 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
         $proxy = $this->getProxy();
         $proxy->configure($opt);
-        $this->assertInstanceOf('\Wowo\Bundle\QueueBundle\Tests\Implementation\ExtendedPheanstalk', $proxy->pheanstalk);
+        $this->assertInstanceOf('\Wowo\QueueBundle\Tests\Implementation\ExtendedPheanstalk', $proxy->pheanstalk);
     }
 
     /**
      * testConfigureWithOwnObject 
-     * @expectedException \Wowo\Bundle\QueueBundle\Exception\ConfigurationException
+     * @expectedException \Wowo\QueueBundle\Exception\ConfigurationException
      * 
      * @access public
      * @return void
@@ -94,7 +94,7 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
     /**
      * testConfigureWithoutAddress 
-     * @expectedException \Wowo\Bundle\QueueBundle\Exception\ConfigurationException
+     * @expectedException \Wowo\QueueBundle\Exception\ConfigurationException
      * 
      * @access public
      * @return void
@@ -107,7 +107,7 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
     /**
      * testConfigureWithEmptyClass 
-     * @expectedException \Wowo\Bundle\QueueBundle\Exception\ConfigurationException
+     * @expectedException \Wowo\QueueBundle\Exception\ConfigurationException
      * 
      * @access public
      * @return void
@@ -120,7 +120,7 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
     /**
      * testConfigureWithWrongClass
-     * @expectedException \Wowo\Bundle\QueueBundle\Exception\ConfigurationException
+     * @expectedException \Wowo\QueueBundle\Exception\ConfigurationException
      * 
      * @access public
      * @return void
@@ -133,7 +133,7 @@ class BeantalkdTest extends \PHPUnit_Framework_TestCase
 
     protected function getProxy()
     {
-        $proxy = new ProxyBuilder('\Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation');
+        $proxy = new ProxyBuilder('\Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation');
         return $proxy
             ->setProperties(array('pheanstalk', 'tube', 'ignore'))
             ->getProxy();
