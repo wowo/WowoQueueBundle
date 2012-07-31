@@ -1,6 +1,6 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\DependencyInjection;
+namespace Wowo\QueueBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\Tests;
+namespace Wowo\QueueBundle\Tests;
 
-use Wowo\Bundle\QueueBundle\QueueManager;
-use Wowo\Bundle\QueueBundle\Implementation\BeanstalkdQueueImplementation;
+use Wowo\QueueBundle\QueueManager;
+use Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation;
 
 /**
  * QueueManagerTest 

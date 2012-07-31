@@ -1,9 +1,9 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\Implementation;
+namespace Wowo\QueueBundle\Implementation;
 
-use Wowo\Bundle\QueueBundle\QueueInterface;
-use Wowo\Bundle\QueueBundle\Exception\ConfigurationException;
+use Wowo\QueueBundle\QueueInterface;
+use Wowo\QueueBundle\Exception\ConfigurationException;
 
 /**
  * Unified Beanstalkd implementation which hides Pheanstalk usage
