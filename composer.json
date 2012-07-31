@@ -15,7 +15,7 @@
         "pda/pheanstalk":  "*"
     },
     "autoload": {
-        "psr-0": { "Wowo\\Bundle\\QueueBundle": "" }
+        "psr-0": { "Wowo\\QueueBundle": "" }
     },
-    "target-dir": "Wowo/Bundle/QueueBundle"
+    "target-dir": "Wowo/QueueBundle"
 }

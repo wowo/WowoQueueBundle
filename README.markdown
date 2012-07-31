@@ -15,7 +15,7 @@ Add following lines to your `deps` file:
 ```
     [WowoQueueBundle]
         git=git://github.com/wowo/WowoQueueBundle.git
-        target=bundles/Wowo/Bundle/QueueBundle
+        target=bundles/Wowo/QueueBundle
 
     [pheanstalk]
         git=https://github.com/pda/pheanstalk
@@ -62,7 +62,7 @@ public function registerBundles()
 {
         $bundles = array(
             // ...
-            new Wowo\Bundle\QueueBundle\WowoQueueBundle(),
+            new Wowo\QueueBundle\WowoQueueBundle(),
         );
 }
 ```

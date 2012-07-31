@@ -1,6 +1,6 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle;
+namespace Wowo\QueueBundle;
 
 interface QueueInterface
 {
