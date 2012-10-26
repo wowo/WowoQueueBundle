@@ -13,7 +13,7 @@
     ],
     "require": {
         "symfony/symfony": ">=2.0.5,<2.1.x-dev",
-        "pda/pheanstalk":  "*"        
+        "pda/pheanstalk": "dev-master"      
     },
     "require-dev": {
         "lapistano/proxy-object":  "master"
