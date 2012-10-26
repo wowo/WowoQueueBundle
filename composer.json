@@ -16,7 +16,7 @@
         "pda/pheanstalk": "dev-master"      
     },
     "require-dev": {
-        "lapistano/proxy-object":  "master"
+        "lapistano/proxy-object": "dev-master"
     },
     "autoload": {
         "psr-0": { "Wowo\\QueueBundle": "" }
