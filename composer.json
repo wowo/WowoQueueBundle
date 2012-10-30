@@ -12,10 +12,14 @@
         }     
     ],
     "require": {
-        "pda/pheanstalk":  "*"
+        "symfony/symfony": ">=2.0.5,<2.1.x-dev",
+        "pda/pheanstalk": "dev-master"      
+    },
+    "require-dev": {
+        "lapistano/proxy-object": "dev-master"
     },
     "autoload": {
         "psr-0": { "Wowo\\QueueBundle": "" }
     },
-    "target-dir": "Wowo/QueueBundle"
+    "target-dir": "Wowo/QueueBundle"    
 }
