@@ -57,6 +57,9 @@ class BeanstalkdQueueImplementation implements QueueInterface
             $this->pheanstalk = null;
             throw new ConfigurationException("Invalid object passed as a pheanstalkObject");
         }
+        elseif (!$this->pheanstalk->getConnection()->isServiceListening()) {
+            throw new ConfigurationException("Beanstalkd server is not listening at {$options['address']}");
+        }
     }
 
     /**
