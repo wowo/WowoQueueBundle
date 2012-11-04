@@ -10,6 +10,8 @@ on your own and send pull request.
 
 ### Step 1: Download WowoQueueBundle
 
+#### If you are using Deps (Symfony 2.0.x)
+
 Add following lines to your `deps` file:
 
 ```
@@ -29,7 +31,25 @@ Now, run the vendors script to download the bundle:
 $ php bin/vendors install
 ```
 
+#### If you are using [Composer](http://getcomposer.org/) (Symfony >= 2.1.x)
+
+Add following lines to your `composer.json` requirements:
+
+``` json
+    "require": {
+        "wowo/wowo-queue-bundle": "dev-master"
+    }
+
+```
+Now, install the bundle with composer:
+
+``` bash
+$ php composer.phar install
+```
+
 ### Step 2: Configure the Autoloader
+
+(You can jump to Step 3 if you are using composer)
 
 Add the `Wowo` namespace to your autoloader:
 
@@ -79,5 +99,14 @@ Then run it as a daemon:
 ``` bash
 $ beanstalkd -d -l 127.0.0.1 -p 11300
 ```
+
+***Note:*** If your beanstalkd service is running in other address or port, you must set the following parameter in your configuration:
+
+``` yaml
+parameters:
+    wowo_queue.pheanstalk.address: 127.0.0.1:11300
+```
+
+Don't forget to change ``` 127.0.0.1:11300 ``` with your address and port.
 
 ![tracking](http://visitspy.net/spot/d9dd2644/track)

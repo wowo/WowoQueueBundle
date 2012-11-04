@@ -1,36 +1,23 @@
 <?php
 
-// Symfony dependencies
-require_once VENDOR_DIR.'/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-use Symfony\Component\ClassLoader\UniversalClassLoader;
-$loader = new UniversalClassLoader();
-$loader->registerNamespaces(array(
-    'Symfony'          => array(VENDOR_DIR.'/symfony/src'),
-    'lapistano'        => VENDOR_DIR.'/lapistano/src',
-));
-$loader->register();
+// if the bundle is within a symfony project, try to reuse the project's autoload
+$autoload = __DIR__.'/../../../../../app/autoload.php';
 
+// if the bundle is the project, try to use the composer's autoload for the tests
+$composerAutoload = __DIR__.'/../vendor/autoload.php';
 
-// Proxy object bootstrap
-require_once VENDOR_DIR . '/proxy-object/bootstrap.php';
+if (is_file($autoload)) {
+    include $autoload;
+} elseif (is_file($composerAutoload)) {
+    include $composerAutoload;
+} else {
+    die('Unable to find autoload.php file, please use composer to load dependencies:
 
-// Mockery class loader
-set_include_path(get_include_path() . PATH_SEPARATOR . VENDOR_DIR . '/mockery/library/');
-require_once('Mockery/Loader.php');
-$loader = new \Mockery\Loader;
-$loader->register();
+wget http://getcomposer.org/composer.phar
+php composer.phar install
 
-require_once VENDOR_DIR . '/pheanstalk/pheanstalk_init.php';
+Visit http://getcomposer.org/ for more information.
 
-// Some nifty namespaces taking care of (borrowed from FOSUserBundle)
-spl_autoload_register(function($class) {
-    if (0 === strpos($class, 'Wowo\\QueueBundle')) {
-        $path = __DIR__.'/../'.implode('/', array_slice(explode('\\', $class), 2)).'.php';
-        if (!stream_resolve_include_path($path)) {
-            return false;
-        }
-        require_once $path;
-        return true;
-    }
-});
+');
+}
 
