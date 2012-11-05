@@ -12,6 +12,5 @@ before_script:
   - wget -nc http://getcomposer.org/composer.phar
   - php composer.phar install --dev
   - sudo apt-get install -qq beanstalkd
-  - sudo ./beanstalkd -l 127.0.0.1 -p 11300
  
 script: phpunit --configuration phpunit.xml.dist
