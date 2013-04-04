@@ -12,17 +12,14 @@ namespace Wowo\QueueBundle;
  * @author Wojciech Sznapka <wojciech@sznapka.pl> 
  * @license 
  */
-class QueueManager implements QueueInterface
+class QueueManager 
 {
     /**
      * Concrete implementation of queue mechanizm
      */
     protected $implementation;
 
-    /**
-     * Symfony2 service container (or any other container implementation you may use with your framework)
-     */
-    protected $serviceContainer;
+    protected $tube;
 
     /**
      * The constructor, gets implementation as a param
@@ -31,25 +28,39 @@ class QueueManager implements QueueInterface
      * @access public
      * @return void
      */
-    public function __construct(QueueInterface $implementation, $serviceContainer = null)
+    public function __construct(QueueInterface $implementation)
     {
-        $this->implementation   = $implementation;
-        $this->serviceContainer = $serviceContainer;
+        $this->implementation = $implementation;
     }
 
-    public function configure(array $options)
+    /**
+     * Sset tube
+     *
+     * @param string $tube tube
+     */
+    public function setTube($tube)
     {
-        return $this->implementation->configure($options);
+        $this->tube = $tube;
+    }
+
+    /**
+     * Gets tube
+     * 
+     * @return string
+     */
+    public function getTube()
+    {
+        return $this->tube;
     }
 
     public function put($job, $priority = null, $delay = null)
     {
-        return $this->implementation->put($job, $priority, $delay);
+        return $this->implementation->put($this->tube, $job, $priority, $delay);
     }
 
     public function get()
     {
-        return $this->implementation->get();
+        return $this->implementation->get($this->tube);
     }
 
     public function delete($implementationSpecyficJobObject)
