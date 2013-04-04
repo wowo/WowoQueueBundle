@@ -2,9 +2,9 @@
 
 namespace Wowo\QueueBundle\Implementation;
 
-use Wowo\QueueBundle\QueueInterface;
+use Wowo\QueueBundle\QueueImplementationInterface;
 use Wowo\QueueBundle\Exception\ConfigurationException;
-use Pheanstalk_Pheanstalk;
+use Pheanstalk_PheanstalkInterface;
 
 /**
  * Unified Beanstalkd implementation which hides Pheanstalk usage
@@ -16,19 +16,19 @@ use Pheanstalk_Pheanstalk;
  * @author Wojciech Sznapka <wojciech@sznapka.pl> 
  * @license 
  */
-class BeanstalkdQueueImplementation implements QueueInterface
+class BeanstalkdQueueImplementation implements QueueImplementationInterface
 {
     protected $pheanstalk;
 
     protected $ignore;
 
-    public function __construct(Pheanstalk_Pheanstalk $pheanstalk, $ignore = null)
+    public function __construct(Pheanstalk_PheanstalkInterface $pheanstalk, $ignore = null)
     {
         $this->pheanstalk = $pheanstalk;
         $this->ignore = $ignore;
 
         if (!$this->pheanstalk->getConnection()->isServiceListening()) {
-            throw new ConfigurationException(sprintf('Beanstalkd server is not listening at %s', $options['address']);
+            throw new ConfigurationException(sprintf('Beanstalkd server is not listening at %s', $options['address']));
         }
     }
 

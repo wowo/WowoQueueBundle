@@ -5,7 +5,7 @@ namespace Wowo\QueueBundle;
 /**
  * Proxies queue implementation
  * 
- * @uses QueueInterface
+ * @uses QueueImplementationInterface
  * @package default
  * @version $id$
  * @copyright 
@@ -19,16 +19,17 @@ class QueueManager
      */
     protected $implementation;
 
+    /**
+     * Default tube
+     */
     protected $tube;
 
     /**
      * The constructor, gets implementation as a param
      * 
-     * @param QueueInterface $implementation 
-     * @access public
-     * @return void
+     * @param QueueImplementationInterface $implementation 
      */
-    public function __construct(QueueInterface $implementation)
+    public function __construct(QueueImplementationInterface $implementation)
     {
         $this->implementation = $implementation;
     }
