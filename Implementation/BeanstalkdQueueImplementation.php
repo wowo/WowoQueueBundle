@@ -64,6 +64,15 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
             ->reserve();
     }
 
+    public function release($tube, $job, $priority = null, $delay = null)
+    {
+        return $this
+            ->pheanstalk
+            ->useTube($tube)
+            ->release($job, $priority, $delay);
+    }
+
+
     /**
      * delete 
      * 

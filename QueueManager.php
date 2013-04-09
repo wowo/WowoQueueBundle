@@ -59,6 +59,11 @@ class QueueManager
         return $this->implementation->put($this->tube, $job, $priority, $delay);
     }
 
+    public function release($job, $priority = null, $delay = null)
+    {
+        return $this->implementation->release($this->tube, $job, $priority, $delay);
+    }
+
     public function get()
     {
         return $this->implementation->get($this->tube);
