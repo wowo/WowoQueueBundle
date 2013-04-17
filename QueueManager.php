@@ -64,9 +64,9 @@ class QueueManager
         return $this->implementation->release($this->tube, $job, $priority, $delay);
     }
 
-    public function get()
+    public function get($secondsToWait = null)
     {
-        return $this->implementation->get($this->tube);
+        return $this->implementation->get($this->tube, $secondsToWait);
     }
 
     public function delete($implementationSpecyficJobObject)

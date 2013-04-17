@@ -55,13 +55,13 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
      * @access public
      * @return void
      */
-    public function get($tube)
+    public function get($tube, $secondsToWait = null)
     {
         return $this
             ->pheanstalk
             ->watch($tube)
             ->ignore($this->ignore)
-            ->reserve();
+            ->reserve($secondsToWait);
     }
 
     public function release($tube, $job, $priority = null, $delay = null)
