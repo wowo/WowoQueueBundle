@@ -1,6 +1,6 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\Exception;
+namespace Wowo\QueueBundle\Exception;
 
 class ConfigurationException extends \RuntimeException
 {

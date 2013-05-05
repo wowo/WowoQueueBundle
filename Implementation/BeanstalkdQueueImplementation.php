@@ -1,9 +1,10 @@
 <?php
 
-namespace Wowo\Bundle\QueueBundle\Implementation;
+namespace Wowo\QueueBundle\Implementation;
 
-use Wowo\Bundle\QueueBundle\QueueInterface;
-use Wowo\Bundle\QueueBundle\Exception\ConfigurationException;
+use Wowo\QueueBundle\QueueImplementationInterface;
+use Wowo\QueueBundle\Exception\ConfigurationException;
+use Pheanstalk_PheanstalkInterface;
 
 /**
  * Unified Beanstalkd implementation which hides Pheanstalk usage
@@ -15,47 +16,19 @@ use Wowo\Bundle\QueueBundle\Exception\ConfigurationException;
  * @author Wojciech Sznapka <wojciech@sznapka.pl> 
  * @license 
  */
-class BeanstalkdQueueImplementation implements QueueInterface
+class BeanstalkdQueueImplementation implements QueueImplementationInterface
 {
     protected $pheanstalk;
-    protected $tube;
+
     protected $ignore;
 
-    /**
-     * configures implementation object 
-     * 
-     * @param array $options 
-     * @access public
-     * @return void
-     */
-    public function configure(array $options)
+    public function __construct(Pheanstalk_PheanstalkInterface $pheanstalk, $ignore = null)
     {
-        $default = array(
-            'address' => null,
-            'tube'    => 'wowo_default',
-            'ignore'  => 'default',
-            'pheanstalkClass'  => 'Pheanstalk',
-            'pheanstalkObject' => null,
-        );
-        $options = array_merge($default, $options);
-        $this->tube    = $options['tube'];
-        $this->ignore  = $options['ignore'];
+        $this->pheanstalk = $pheanstalk;
+        $this->ignore = $ignore;
 
-        if (null != $options['pheanstalkObject']) {
-            $this->pheanstalk = $options['pheanstalkObject'];
-        } else {
-            if (null == $options['address']) {
-                throw new ConfigurationException("Beanstalkd address can't be null");
-            }
-            if (null == $options['pheanstalkClass']) {
-                throw new ConfigurationException("Pheanstalk class can't be null");
-            }
-            $klass = $options['pheanstalkClass'];
-            $this->pheanstalk = new $klass($options['address']);
-        }
-        if (!$this->pheanstalk instanceof \Pheanstalk) {
-            $this->pheanstalk = null;
-            throw new ConfigurationException("Invalid object passed as a pheanstalkObject");
+        if (!$this->pheanstalk->getConnection()->isServiceListening()) {
+            throw new ConfigurationException(sprintf('Beanstalkd server is not listening at %s', $options['address']));
         }
     }
 
@@ -68,12 +41,12 @@ class BeanstalkdQueueImplementation implements QueueInterface
      * @access public
      * @return void
      */
-    public function put($job, $priority = null, $delay = null)
+    public function put($tube, $job, $priority = null, $delay = null)
     {
         return $this
             ->pheanstalk
-            ->useTube($this->tube)
-            ->put($job, $priority ?: \Pheanstalk::DEFAULT_PRIORITY, $delay);
+            ->useTube($tube)
+            ->put($job, $priority ?: \Pheanstalk_Pheanstalk::DEFAULT_PRIORITY, $delay);
     }
 
     /**
@@ -82,14 +55,23 @@ class BeanstalkdQueueImplementation implements QueueInterface
      * @access public
      * @return void
      */
-    public function get()
+    public function get($tube, $secondsToWait = null)
     {
         return $this
             ->pheanstalk
-            ->watch($this->tube)
+            ->watch($tube)
             ->ignore($this->ignore)
-            ->reserve();
+            ->reserve($secondsToWait);
     }
+
+    public function release($tube, $job, $priority = null, $delay = null)
+    {
+        return $this
+            ->pheanstalk
+            ->useTube($tube)
+            ->release($job, $priority, $delay);
+    }
+
 
     /**
      * delete 
@@ -103,9 +85,5 @@ class BeanstalkdQueueImplementation implements QueueInterface
         return $this
             ->pheanstalk
             ->delete($implementationSpecyficJobObject);
-    }
-
-    protected function getAllMessages()
-    {
     }
 }

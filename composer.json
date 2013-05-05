@@ -3,7 +3,7 @@
     "description": "The WowoQueueBundle provides unified method for use queue systems, like Beanstalkd, RabbitMQ, flat files, database driven queues etc.",
     "keywords": ["queue", "Beanstalkd"],
     "type": "package",
-    "license": "",
+    "license": "MIT",
     "authors": [
         {
             "name":     "Wojciech Sznapka",
@@ -12,10 +12,10 @@
         }     
     ],
     "require": {
-        "pda/pheanstalk":  "*"
+        "pda/pheanstalk": "v2.1.0"
     },
     "autoload": {
-        "psr-0": { "Wowo\\Bundle\\QueueBundle": "" }
+        "psr-0": { "Wowo\\QueueBundle": "" }
     },
-    "target-dir": "Wowo/Bundle/QueueBundle"
+    "target-dir": "Wowo/QueueBundle"    
 }
