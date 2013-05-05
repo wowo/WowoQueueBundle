@@ -5,14 +5,14 @@ namespace Wowo\QueueBundle;
 /**
  * Proxies queue implementation
  * 
- * @uses QueueInterface
+ * @uses QueueImplementationInterface
  * @package default
  * @version $id$
  * @copyright 
  * @author Wojciech Sznapka <wojciech@sznapka.pl> 
  * @license 
  */
-class QueueManager implements QueueInterface
+class QueueManager 
 {
     /**
      * Concrete implementation of queue mechanizm
@@ -20,36 +20,53 @@ class QueueManager implements QueueInterface
     protected $implementation;
 
     /**
-     * Symfony2 service container (or any other container implementation you may use with your framework)
+     * Default tube
      */
-    protected $serviceContainer;
+    protected $tube;
 
     /**
      * The constructor, gets implementation as a param
      * 
-     * @param QueueInterface $implementation 
-     * @access public
-     * @return void
+     * @param QueueImplementationInterface $implementation 
      */
-    public function __construct(QueueInterface $implementation, $serviceContainer = null)
+    public function __construct(QueueImplementationInterface $implementation)
     {
-        $this->implementation   = $implementation;
-        $this->serviceContainer = $serviceContainer;
+        $this->implementation = $implementation;
     }
 
-    public function configure(array $options)
+    /**
+     * Sset tube
+     *
+     * @param string $tube tube
+     */
+    public function setTube($tube)
     {
-        return $this->implementation->configure($options);
+        $this->tube = $tube;
+    }
+
+    /**
+     * Gets tube
+     * 
+     * @return string
+     */
+    public function getTube()
+    {
+        return $this->tube;
     }
 
     public function put($job, $priority = null, $delay = null)
     {
-        return $this->implementation->put($job, $priority, $delay);
+        return $this->implementation->put($this->tube, $job, $priority, $delay);
     }
 
-    public function get()
+    public function release($job, $priority = null, $delay = null)
     {
-        return $this->implementation->get();
+        return $this->implementation->release($this->tube, $job, $priority, $delay);
+    }
+
+    public function get($secondsToWait = null)
+    {
+        return $this->implementation->get($this->tube, $secondsToWait);
     }
 
     public function delete($implementationSpecyficJobObject)

@@ -109,4 +109,59 @@ parameters:
 
 Don't forget to change ``` 127.0.0.1:11300 ``` with your address and port.
 
+## Usage
+
+### Using Beanstalkd in-memory queueing server
+
+Obtain manager with Beanstalkd implementation from the controller
+
+``` php
+$manager = $this->get('wowo_queue.implementation.beanstalkd');
+```
+
+Put some job into the queue to default tube wowo_queue. which can be changed by wowo_queue.pheanstalk.tube parameter
+
+``` php
+$manager->put(json_encode(array('payload' => 'Hello world', 'date' => new \DateTime())));
+```
+
+Get jobs as soon as they appear in queue. In below example an infinite loop is presented.
+Such operations should be run as a background tasks, which listens to the queue and processes jobs when they appear.
+
+``` php
+while ($job = $manager->get()) {
+    $data = json_decode($job->getData(), true);
+    printf("Job date: %s, payload: %s\n", $data['date']['date'], $data['payload']);
+}
+```
+
+Deleting jobs from the queue is fairly easy
+
+``` php
+$job = $manager->get();
+$manager->delete($job);
+```
+
+### Using Beanstalkd implementation without service container
+
+Manager object creation is simple and can be done as listed below.
+This is useful when you don't use bundle in Symfony project.
+
+``` php
+$implementation = new Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation();
+$implementation->configure(array(
+    'address' => 'localhost',
+    'tube' => 'foo-tube',
+));
+$manager = new Wowo\QueueBundle\QueueManager($implementation);
+```
+
+In case you are not using autoloader, Pheanstalk need to be autoloaded by hand:
+
+``` php
+require_once('pheanstalk/classes/pheanstalk/classloader.php');
+\pheanstalk_classloader::register('pheanstalk/classes/');
+```
+
+
 ![tracking](http://visitspy.net/spot/d9dd2644/track)

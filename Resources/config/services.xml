@@ -7,26 +7,27 @@
     <parameters>
         <parameter key="wowo_queue.queue_manager.class">Wowo\QueueBundle\QueueManager</parameter>
         <parameter key="wowo_queue.beanstalkd_implementation.class">Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation</parameter>
+        <parameter key="wowo_queue.pheanstalk.class">Pheanstalk_Pheanstalk</parameter>
 
-        <parameter key="wowo_queue.pheanstalk.address">127.0.0.1:11300</parameter>
-        <parameter key="wowo_queue.pheanstalk.tube">wowo_queue</parameter>
+        <parameter key="wowo_queue.default.address">127.0.0.1:11300</parameter>
+        <parameter key="wowo_queue.default.tube">wowo_queue</parameter>
     </parameters>
 
     <services>
         <service id="wowo_queue.manager" class="%wowo_queue.queue_manager.class%">
-            <argument type="service" id="wowo_queue.queue_implementation" />
-            <argument type="service" id="service_container" />
-        </service>
-
-        <service id="wowo_queue.implementation.beanstalkd" class="%wowo_queue.beanstalkd_implementation.class%">
-            <call method="configure">
-                <argument type="collection">
-                    <argument key="address">%wowo_queue.pheanstalk.address%</argument>
-                    <argument key="tube">%wowo_queue.pheanstalk.tube%</argument>
-                </argument>
+            <argument type="service" id="wowo_queue.implementation.beanstalkd" />
+            <call method="setTube">
+                <argument>%wowo_queue.default.tube%</argument>
             </call>
         </service>
 
-        <service id="wowo_queue.queue_implementation" alias="wowo_queue.implementation.beanstalkd" />
+        <service id="wowo_queue.implementation.beanstalkd" class="%wowo_queue.beanstalkd_implementation.class%" public="false">
+            <argument type="service" id="wowo_queue.pheanstalk" />
+        </service>
+
+        <service id="wowo_queue.pheanstalk" class="%wowo_queue.pheanstalk.class%" public="false">
+            <argument>%wowo_queue.default.address%</argument>
+        </service>
+
     </services>
 </container>
