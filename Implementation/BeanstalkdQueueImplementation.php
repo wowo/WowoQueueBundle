@@ -18,8 +18,14 @@ use Pheanstalk_PheanstalkInterface;
  */
 class BeanstalkdQueueImplementation implements QueueImplementationInterface
 {
+    /**
+     * @var Pheanstalk_PheanstalkInterface 
+     */
     protected $pheanstalk;
 
+    /**
+     * @var string
+     */
     protected $ignore;
 
     public function __construct(Pheanstalk_PheanstalkInterface $pheanstalk, $ignore = null)
@@ -28,7 +34,7 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
         $this->ignore = $ignore;
 
         if (!$this->pheanstalk->getConnection()->isServiceListening()) {
-            throw new ConfigurationException(sprintf('Beanstalkd server is not listening at %s', $options['address']));
+            throw new ConfigurationException(sprintf('Beanstalkd server is not listening at %s', $this->pheanstalk->getConnection()->getHost()));
         }
     }
 
