@@ -14,6 +14,9 @@
     "require": {
         "pda/pheanstalk": "v2.1.0"
     },
+    "require-dev": {
+        "mockery/mockery" : "0.7.2"
+    },
     "autoload": {
         "psr-0": { "Wowo\\QueueBundle": "" }
     },

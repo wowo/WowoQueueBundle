@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="./Tests/bootstrap.php" color="true">
+<phpunit bootstrap="./vendor/autoload.php" color="true">
 
     <testsuites>
         <testsuite name="WowoQueeuBundle test suite">
@@ -12,7 +12,6 @@
         <blacklist>
             <directory>./Resources</directory>
             <directory>./Tests</directory>
-            <file>./Tests/autoload.php.dist</file>
             <directory>./vendor</directory>
         </blacklist>
     </filter>
