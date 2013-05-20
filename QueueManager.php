@@ -4,15 +4,15 @@ namespace Wowo\QueueBundle;
 
 /**
  * Proxies queue implementation
- * 
+ *
  * @uses QueueImplementationInterface
  * @package default
  * @version $id$
- * @copyright 
- * @author Wojciech Sznapka <wojciech@sznapka.pl> 
- * @license 
+ * @copyright
+ * @author Wojciech Sznapka <wojciech@sznapka.pl>
+ * @license
  */
-class QueueManager 
+class QueueManager
 {
     /**
      * Concrete implementation of queue mechanizm
@@ -26,8 +26,8 @@ class QueueManager
 
     /**
      * The constructor, gets implementation as a param
-     * 
-     * @param QueueImplementationInterface $implementation 
+     *
+     * @param QueueImplementationInterface $implementation
      */
     public function __construct(QueueImplementationInterface $implementation)
     {
@@ -46,7 +46,7 @@ class QueueManager
 
     /**
      * Gets tube
-     * 
+     *
      * @return string
      */
     public function getTube()

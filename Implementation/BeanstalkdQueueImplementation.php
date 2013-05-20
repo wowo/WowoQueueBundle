@@ -8,18 +8,18 @@ use Pheanstalk_PheanstalkInterface;
 
 /**
  * Unified Beanstalkd implementation which hides Pheanstalk usage
- * 
+ *
  * @uses QueueInterface
  * @package default
  * @version $id$
- * @copyright 
- * @author Wojciech Sznapka <wojciech@sznapka.pl> 
- * @license 
+ * @copyright
+ * @author Wojciech Sznapka <wojciech@sznapka.pl>
+ * @license
  */
 class BeanstalkdQueueImplementation implements QueueImplementationInterface
 {
     /**
-     * @var Pheanstalk_PheanstalkInterface 
+     * @var Pheanstalk_PheanstalkInterface
      */
     protected $pheanstalk;
 
@@ -39,11 +39,11 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
     }
 
     /**
-     * put 
-     * 
-     * @param mixed $job 
-     * @param mixed $priority 
-     * @param mixed $delay 
+     * put
+     *
+     * @param mixed $job
+     * @param mixed $priority
+     * @param mixed $delay
      * @access public
      * @return void
      */
@@ -56,8 +56,8 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
     }
 
     /**
-     * get 
-     * 
+     * get
+     *
      * @access public
      * @return void
      */
@@ -78,11 +78,10 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
             ->release($job, $priority, $delay);
     }
 
-
     /**
-     * delete 
-     * 
-     * @param mixed $implementationSpecyficJobObject 
+     * delete
+     *
+     * @param mixed $implementationSpecyficJobObject
      * @access public
      * @return void
      */
