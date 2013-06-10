@@ -22,7 +22,7 @@ Add following lines to your `deps` file:
     [pheanstalk]
         git=https://github.com/pda/pheanstalk
         target=/pheanstalk
-        version=v1.1.0
+        version=v2.1.0
 
 ```
 Now, run the vendors script to download the bundle:
