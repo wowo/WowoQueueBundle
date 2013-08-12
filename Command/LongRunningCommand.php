@@ -34,14 +34,7 @@ abstract class LongRunningCommand extends ContainerAwareCommand
         $this->logger->log(sprintf('<info>%s</info> is starting', $this->getName()));
 
         while (1) {
-            if ($this->nextReconnectDate < new DateTime()) {
-                $this->logger->log(sprintf('<info>%s</info> Reconnecting to database', $this->getName()));
-
-                $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection()->close();
-                $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection()->connect();
-
-                $this->nextReconnectDate = $this->nextReconnectDate->add(new DateInterval(self::RECONNECT_INTERVAL));
-            }
+            $this->externalResourcesManagement();
             try {
                 if (null == $this->queue) {
                     throw new BadMethodCallException('Queue has not been set');
@@ -58,6 +51,18 @@ abstract class LongRunningCommand extends ContainerAwareCommand
                 $this->logger->log(sprintf('<error>%s</error> occured doing <error>%s</error>, message: %s',
                     get_class($e), $this->getName(), $e->getMessage()), Logger::ERROR, $e);
             }
+        }
+    }
+
+    protected function externalResourcesManagement()
+    {
+        if ($this->nextReconnectDate < new DateTime()) {
+            $this->logger->log(sprintf('<info>%s</info> Reconnecting to database', $this->getName()));
+
+            $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection()->close();
+            $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection()->connect();
+
+            $this->nextReconnectDate = $this->nextReconnectDate->add(new DateInterval(self::RECONNECT_INTERVAL));
         }
     }
 }
