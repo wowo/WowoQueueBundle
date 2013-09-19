@@ -116,7 +116,7 @@ Don't forget to change ``` 127.0.0.1:11300 ``` with your address and port.
 Obtain manager with Beanstalkd implementation from the controller
 
 ``` php
-$manager = $this->get('wowo_queue.implementation.beanstalkd');
+$manager = $this->get('wowo_queue.manager');
 ```
 
 Put some job into the queue to default tube wowo_queue. which can be changed by wowo_queue.pheanstalk.tube parameter
