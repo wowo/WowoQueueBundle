@@ -19,12 +19,12 @@ use Pheanstalk_PheanstalkInterface;
 class BeanstalkdQueueImplementation implements QueueImplementationInterface
 {
     /**
-     * @var Pheanstalk_PheanstalkInterface
+     * @var Pheanstalk_PheanstalkInterface 
      */
     protected $pheanstalk;
 
     /**
-     * @var string
+     * @var string 
      */
     protected $ignore;
 
