@@ -22,7 +22,7 @@ Add following lines to your `deps` file:
     [pheanstalk]
         git=https://github.com/pda/pheanstalk
         target=/pheanstalk
-        version=v1.1.0
+        version=v2.1.0
 
 ```
 Now, run the vendors script to download the bundle:
@@ -116,7 +116,7 @@ Don't forget to change ``` 127.0.0.1:11300 ``` with your address and port.
 Obtain manager with Beanstalkd implementation from the controller
 
 ``` php
-$manager = $this->get('wowo_queue.implementation.beanstalkd');
+$manager = $this->get('wowo_queue.manager');
 ```
 
 Put some job into the queue to default tube wowo_queue. which can be changed by wowo_queue.pheanstalk.tube parameter
