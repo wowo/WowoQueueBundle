@@ -1,6 +1,7 @@
 # WowoQueueBundle
 
 [![Build Status](https://secure.travis-ci.org/wowo/WowoQueueBundle.png)](https://secure.travis-ci.org/wowo/WowoQueueBundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9ba7fbb3-c52a-4003-a477-5dc919012697/big.png)](https://insight.sensiolabs.com/projects/9ba7fbb3-c52a-4003-a477-5dc919012697)
 
 The WowoQueueBundle provides unified method for use queue systems, like Beanstalkd, RabbitMQ, flat files,
 database driven queues, etc. For now it only supports Beanstalkd, but you can add your own implementation
