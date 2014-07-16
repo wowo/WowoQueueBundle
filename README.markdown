@@ -105,7 +105,7 @@ $ beanstalkd -d -l 127.0.0.1 -p 11300
 
 ``` yaml
 parameters:
-    wowo_queue.pheanstalk.address: 127.0.0.1:11300
+    wowo_queue.default.address: 127.0.0.1:11300
 ```
 
 Don't forget to change ``` 127.0.0.1:11300 ``` with your address and port.
