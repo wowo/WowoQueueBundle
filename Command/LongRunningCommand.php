@@ -28,7 +28,7 @@ abstract class LongRunningCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->nextReconnectDate = new DateTime();
-        $this->nextReconnectDate->add(new DateInterval(self::RECONNECT_INTERVAL));
+        $this->nextReconnectDate->add(new DateInterval(static::RECONNECT_INTERVAL));
 
         $this->logger = new LoggerHelper($this->getContainer()->get('logger'), $output);
         $this->logger->log(sprintf('<info>%s</info> is starting', $this->getName()));
@@ -39,14 +39,14 @@ abstract class LongRunningCommand extends ContainerAwareCommand
                 if (null == $this->queue) {
                     throw new BadMethodCallException('Queue has not been set');
                 }
-                $rawJob = $this->queue->get(self::SECONDS_TO_WAIT_FOR_QUEUE);
+                $rawJob = $this->queue->get(static::SECONDS_TO_WAIT_FOR_QUEUE);
                 if ($rawJob) {
                     $this->doJob(json_decode($rawJob->getData(), false));
                     $this->queue->delete($rawJob);
                 }
             } catch (Exception $e) {
                 if (isset($rawJob)) {
-                    $this->queue->release($rawJob, null, self::SECONDS_TO_BE_RELEASED_FOR);
+                    $this->queue->release($rawJob, null, static::SECONDS_TO_BE_RELEASED_FOR);
                 }
                 $this->logger->log(sprintf('<error>%s</error> occured doing <error>%s</error>, message: %s',
                     get_class($e), $this->getName(), $e->getMessage()), Logger::ERROR, $e);
@@ -62,7 +62,7 @@ abstract class LongRunningCommand extends ContainerAwareCommand
             $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection()->close();
             $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection()->connect();
 
-            $this->nextReconnectDate = $this->nextReconnectDate->add(new DateInterval(self::RECONNECT_INTERVAL));
+            $this->nextReconnectDate = $this->nextReconnectDate->add(new DateInterval(static::RECONNECT_INTERVAL));
         }
     }
 }
