@@ -5,7 +5,8 @@ use Aws\Sqs\SqsClient;
 use Wowo\QueueBundle\Implementation\SQSQueue\Message as SqsMessage;
 use Wowo\QueueBundle\QueueImplementationInterface;
 
-class SQSQueueImplementation implements QueueImplementationInterface {
+class SQSQueueImplementation implements QueueImplementationInterface
+{
 
     /**
      * Maximum allowed wait time (in seconds)
@@ -50,6 +51,7 @@ class SQSQueueImplementation implements QueueImplementationInterface {
         if (!isset($this->tubeToUrlCache[$tube])) {
             $this->tubeToUrlCache[$tube] = $this->q->getQueueUrl(['QueueName' => $this->queueNames[$tube]])->get('QueueUrl');
         }
+
         return $this->tubeToUrlCache[$tube];
     }
 
@@ -65,7 +67,7 @@ class SQSQueueImplementation implements QueueImplementationInterface {
         $this->q->sendMessage([
             'QueueUrl' => $this->getQueueUrlFor($tube),
             'MessageBody' => $job,
-            'DelaySeconds' => $delay ? $delay : 0,
+            'DelaySeconds' => $delay ?: 0,
         ]);
     }
 
@@ -83,10 +85,8 @@ class SQSQueueImplementation implements QueueImplementationInterface {
             'MaxNumberOfMessages' => 1,
             'WaitTimeSeconds' => $secondsToWait > self::WAIT_TIME_MAX ? self::WAIT_TIME_MAX : $secondsToWait,
         ])->get('Messages');
-        if (!count($messages)) {
-            return null;
-        }
-        return new SqsMessage($qUrl, $messages[0]);
+
+        return count($messages) ? new SqsMessage($qUrl, $messages[0]) : null;
     }
 
     /**

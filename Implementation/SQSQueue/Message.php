@@ -1,7 +1,8 @@
 <?php
 namespace Wowo\QueueBundle\Implementation\SQSQueue;
 
-class Message {
+class Message
+{
 
     /**
      * @var string
