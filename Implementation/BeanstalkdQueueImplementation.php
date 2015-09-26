@@ -44,15 +44,21 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
      * @param mixed $job
      * @param mixed $priority
      * @param mixed $delay
+     * @param mixed $ttr
      * @access public
      * @return void
      */
-    public function put($tube, $job, $priority = null, $delay = null)
+    public function put($tube, $job, $priority = null, $delay = null, $ttr = null)
     {
         return $this
             ->pheanstalk
             ->useTube($tube)
-            ->put($job, $priority ?: \Pheanstalk_Pheanstalk::DEFAULT_PRIORITY, $delay);
+            ->put(
+                $job,
+                $priority ?: \Pheanstalk_Pheanstalk::DEFAULT_PRIORITY,
+                $delay,
+                $ttr ?: \Pheanstalk_Pheanstalk::DEFAULT_TTR
+            );
     }
 
     /**
