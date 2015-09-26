@@ -166,3 +166,28 @@ require_once('pheanstalk/classes/pheanstalk/classloader.php');
 
 
 ![tracking](http://visitspy.net/spot/d9dd2644/track)
+
+## Amazon SQS
+
+The SQSQueueImplementation utilizes the AWS PHP SDK v2
+
+### Configuration
+
+To inject the SQS Implementation into your QueueManager, make sure you instantiate it with a
+configured SQS client and an associative array mapping tube names to SQS queue names.
+
+**Symfony bundle's services.yml example**
+```
+    # general AWS SQS client
+    queue.sqs_client:
+        class: Aws\Sqs\SqsClient
+        factory_class: Aws\Sqs\SqsClient
+        factory_method: factory
+        arguments:
+          - {credentials: {key: %amazon.s3.key%, secret: %amazon.s3.secret%}, region: %amazon.s3.region%}
+    # wowo sqs implementation
+    queue.implementation.sqs:
+      class: Wowo\QueueBundle\Implementation\SQSQueueImplementation
+      arguments: [@queue.sqs_client, %queue.tubes_to_sqs%]
+```
+From there, you can simply inject the SQS implementation into your QueueManager to get or put messages
