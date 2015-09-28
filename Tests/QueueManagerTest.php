@@ -26,12 +26,12 @@ class QueueManagerTest extends \PHPUnit_Framework_TestCase
     public function testPutAndRelease()
     {
         $impl = Mockery::mock('\Wowo\QueueBundle\QueueImplementationInterface');
-        $impl->shouldReceive('put')->once()->with('the-tube', 'a thing', 1, 100)->andReturn(true);
+        $impl->shouldReceive('put')->once()->with('the-tube', 'a thing', 1, 100, 60)->andReturn(true);
         $impl->shouldReceive('release')->once()->with('the-tube', 'other thing', 1, 100)->andReturn(true);
         $queue = new QueueManager($impl);
         $queue->setTube('the-tube');
 
-        $this->assertTrue($queue->put('a thing', 1, 100));
+        $this->assertTrue($queue->put('a thing', 1, 100, 60));
         $this->assertTrue($queue->release('other thing', 1, 100));
     }
 
