@@ -62,13 +62,30 @@ class SQSQueueImplementation implements QueueImplementationInterface
      * @param null $priority
      * @param null $delay
      */
-    public function put($tube, $job, $priority = null, $delay = null)
+    public function put($tube, $job, $priority = null, $delay = null, $ttr = null)
     {
         $this->q->sendMessage([
             'QueueUrl' => $this->getQueueUrlFor($tube),
             'MessageBody' => $job,
             'DelaySeconds' => $delay ?: 0,
         ]);
+    }
+
+    /**
+     * putBatch
+     *
+     * @param array $jobs
+     * @param mixed $priority
+     * @param mixed $delay
+     * @param mixed $ttr
+     * @access public
+     * @return void
+     */
+    public function putBatch($tube, $jobs, $priority = null, $delay = null, $ttr = null)
+    {
+        foreach ($jobs as $job) {
+            $this->put($tube, $job, $priority, $delay, $ttr);
+        }
     }
 
     /**

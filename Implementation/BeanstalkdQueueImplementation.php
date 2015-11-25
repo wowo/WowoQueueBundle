@@ -62,6 +62,23 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
     }
 
     /**
+     * putBatch
+     *
+     * @param array $jobs
+     * @param mixed $priority
+     * @param mixed $delay
+     * @param mixed $ttr
+     * @access public
+     * @return void
+     */
+    public function putBatch($tube, $jobs, $priority = null, $delay = null, $ttr = null)
+    {
+        foreach ($jobs as $job) {
+            $this->put($tube, $job, $priority, $delay, $ttr);
+        }
+    }
+
+    /**
      * get
      *
      * @access public
