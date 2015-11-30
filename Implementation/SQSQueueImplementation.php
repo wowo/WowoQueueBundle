@@ -83,8 +83,19 @@ class SQSQueueImplementation implements QueueImplementationInterface
      */
     public function putBatch($tube, $jobs, $priority = null, $delay = null, $ttr = null)
     {
-        foreach ($jobs as $job) {
-            $this->put($tube, $job, $priority, $delay, $ttr);
+        // http://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessageBatch.html
+        // Delivers up to ten messages to the specified queue
+        foreach (array_chunk($jobs, 10) as $chunk) {
+            $entries = array_map(function($job) use ($delay) {
+                return [
+                    'MessageBody' => $job,
+                    'DelaySeconds' => $delay ?: 0,
+                ];
+            }, $chunk);
+            $this->q->sendMessageBatch([
+                'QueueUrl' => $this->getQueueUrlFor($tube),
+                'Entries' => $entries,
+            ]);
         }
     }
 
