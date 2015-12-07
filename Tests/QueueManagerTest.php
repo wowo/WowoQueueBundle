@@ -2,8 +2,8 @@
 
 namespace Wowo\QueueBundle\Tests;
 
-use \Wowo\QueueBundle\QueueManager;
-use \Mockery;
+use Mockery;
+use Wowo\QueueBundle\QueueManager;
 
 class QueueManagerTest extends \PHPUnit_Framework_TestCase
 {

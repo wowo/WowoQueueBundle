@@ -7,15 +7,15 @@ use DateInterval;
 use DateTime;
 use Exception;
 use Monolog\Logger;
+use stdClass;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Wowo\QueueBundle\Command\Helper\LoggerHelper;
-use stdClass;
 
 abstract class LongRunningCommand extends ContainerAwareCommand
 {
-    const RECONNECT_INTERVAL = 'PT1H'; // we reconnect with database for someintervals, to avoid 'MySQL Server gone away' problem
+    const RECONNECT_INTERVAL = 'PT1H'; // we reconnect with database for some intervals, to avoid 'MySQL Server gone away' problem
     const SECONDS_TO_BE_RELEASED_FOR = 60;
     const SECONDS_TO_WAIT_FOR_QUEUE = 60;
 
@@ -48,7 +48,7 @@ abstract class LongRunningCommand extends ContainerAwareCommand
                 if (isset($rawJob)) {
                     $this->queue->release($rawJob, null, static::SECONDS_TO_BE_RELEASED_FOR);
                 }
-                $this->logger->log(sprintf('<error>%s</error> occured doing <error>%s</error>, message: %s',
+                $this->logger->log(sprintf('<error>%s</error> occurred doing <error>%s</error>, message: %s',
                     get_class($e), $this->getName(), $e->getMessage()), Logger::ERROR, $e);
             }
         }
