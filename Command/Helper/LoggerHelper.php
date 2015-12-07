@@ -4,8 +4,8 @@ namespace Wowo\QueueBundle\Command\Helper;
 
 use DateTime;
 use Exception;
-use Symfony\Component\Console\Output\OutputInterface;
 use Monolog\Logger;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class LoggerHelper
 {
@@ -25,7 +25,7 @@ class LoggerHelper
     public function log($message, $level = Logger::INFO, Exception $e = null)
     {
         $now = new DateTime();
-        $this->logger->addRecord($level, strip_tags($message), $e ? array('exception' => $e) : array());
+        $this->logger->addRecord($level, strip_tags($message), $e ? ['exception' => $e] : []);
         $this->output->writeLn(sprintf('[%s] %s', $now->format($this->timeFormat), $message));
     }
 }

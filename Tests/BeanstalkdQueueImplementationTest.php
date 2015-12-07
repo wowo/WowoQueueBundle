@@ -2,8 +2,8 @@
 
 namespace Wowo\QueueBundle\Tests;
 
-use \Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation;
-use \Mockery;
+use Mockery;
+use Wowo\QueueBundle\Implementation\BeanstalkdQueueImplementation;
 
 class BeanstalkdQueueImplementationTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class BeanstalkdQueueImplementationTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Wowo\QueueBundle\Exception\ConfigurationException
      */
-    public function testNotListenningToService()
+    public function testNotListeningToService()
     {
         $pheanstalk = Mockery::mock('\Pheanstalk_PheanstalkInterface');
         $pheanstalk->shouldReceive('getConnection->isServiceListening')->andThrow('\Wowo\QueueBundle\Exception\ConfigurationException');

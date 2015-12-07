@@ -2,9 +2,9 @@
 
 namespace Wowo\QueueBundle\Implementation;
 
-use Wowo\QueueBundle\QueueImplementationInterface;
-use Wowo\QueueBundle\Exception\ConfigurationException;
 use Pheanstalk_PheanstalkInterface;
+use Wowo\QueueBundle\Exception\ConfigurationException;
+use Wowo\QueueBundle\QueueImplementationInterface;
 
 /**
  * Unified Beanstalkd implementation which hides Pheanstalk usage
@@ -41,12 +41,12 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
     /**
      * put
      *
+     * @param $tube
      * @param mixed $job
      * @param mixed $priority
      * @param mixed $delay
      * @param mixed $ttr
      * @access public
-     * @return void
      */
     public function put($tube, $job, $priority = null, $delay = null, $ttr = null)
     {
@@ -65,7 +65,8 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
      * get
      *
      * @access public
-     * @return void
+     * @param $tube
+     * @param null $secondsToWait
      */
     public function get($tube, $secondsToWait = null)
     {
@@ -87,14 +88,13 @@ class BeanstalkdQueueImplementation implements QueueImplementationInterface
     /**
      * delete
      *
-     * @param mixed $implementationSpecyficJobObject
+     * @param mixed $implementationSpecificJobObject
      * @access public
-     * @return void
      */
-    public function delete($implementationSpecyficJobObject)
+    public function delete($implementationSpecificJobObject)
     {
         return $this
             ->pheanstalk
-            ->delete($implementationSpecyficJobObject);
+            ->delete($implementationSpecificJobObject);
     }
 }
