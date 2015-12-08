@@ -7,7 +7,6 @@ use \Mockery;
 
 class BeanstalkdQueueImplementationTest extends \PHPUnit_Framework_TestCase
 {
-
     public function tearDown()
     {
         Mockery::close();
@@ -18,7 +17,7 @@ class BeanstalkdQueueImplementationTest extends \PHPUnit_Framework_TestCase
      */
     public function putBatch()
     {
-        $jobs = array(1, 2);
+        $jobs = [1, 2];
         $tube = 'tube';
         $pheanstalk = Mockery::mock('\Pheanstalk_PheanstalkInterface');
         $pheanstalk->shouldReceive('getConnection->isServiceListening')->andReturn(true);
