@@ -17,10 +17,10 @@ class SQSQueueImplementationTest extends \PHPUnit_Framework_TestCase
         $tube = 'tube';
         $queueName = 'queueName';
 
-        $q = $this->getMockBuilder('\Aws\Sqs\SqsClient')->disableOriginalConstructor()->setMethods(['sendMessage', 'sendMessageBatch', 'getQueueUrl'])->getMock();
-        $q->expects($this->never())->method('sendMessage');
-        $q->expects($this->exactly($batchCount))->method('sendMessageBatch');
-        $q->expects($this->once())->method('getQueueUrl')->with(['QueueName' => $queueName])->will($this->returnValue(new Model(['QueueUrl' => 'queueUrl'])));
+        $q = Mockery::mock($this->getMockBuilder('\Aws\Sqs\SqsClient')->disableOriginalConstructor()->getMock());
+        $q->shouldReceive('sendMessage')->never();
+        $q->shouldReceive('sendMessageBatch')->times($batchCount);
+        $q->shouldReceive('getQueueUrl')->once()->with(['QueueName' => $queueName])->andReturn(new Model(['QueueUrl' => 'queueUrl']));
 
         $impl = new SQSQueueImplementation($q, [$tube => $queueName]);
         $impl->putBatch($tube, $jobs);

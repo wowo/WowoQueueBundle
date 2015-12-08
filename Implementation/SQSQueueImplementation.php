@@ -32,7 +32,7 @@ class SQSQueueImplementation implements QueueImplementationInterface
      */
     protected $tubeToUrlCache = [];
 
-    public function __construct(SqsClient $q, array $queueNames = [])
+    public function __construct($q, array $queueNames = [])
     {
         $this->q = $q;
         $this->queueNames = $queueNames;
